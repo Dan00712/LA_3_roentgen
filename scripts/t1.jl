@@ -14,7 +14,10 @@ output_f = ARGS[2]
 
 @info "loading input file" input_f
 df = DataFrame(CSV.File(input_f))
-p = scatter(df[:, 1], df[:, 2], label="meassured values")
+p = scatter(df[:, 1], df[:, 2],
+         label="meassured values",
+         xlabel=names(df)[1], ylabel=names(df)[2]
+)
 
 
 function newton(F, α0, iterations=100)
