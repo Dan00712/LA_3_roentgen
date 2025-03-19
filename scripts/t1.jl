@@ -2,6 +2,7 @@ using DrWatson
 @quickactivate
 
 using Logging
+#Logging.global_logger(Logging.ConsoleLogger(Logging.Debug))
 
 using Tensors
 using CSV
@@ -16,21 +17,24 @@ df = DataFrame(CSV.File(input_f))
 p = scatter(df[:, 1], df[:, 2], label="meassured values")
 
 
-function newton(F, μ0=1, iterations=100)
-    μ = μ0
-    hF_(μ) = hessian(F, μ, :all)
+function newton(F, α0, iterations=100)
+    α = α0
+    hF_(α) = hessian(F, α, :all)
     for _ in 1:iterations
-        hF, gF, _ = hF_(μ)
-        Δ = - hF\gF
-        μ += Δ
+        hF, gF, _ = hF_(α)
+        Δ = (hF\gF)
+        α = Vec{length(α0)}(α .- Δ)
     end
-    μ
+    α
 end
 
-f(x, μ) = df[1,2] * exp(-μ*x)
-F(μ) = [(Ri - f(xi, μ))^2 for (xi, Ri) in eachrow(df)] |> sum
-μ = newton(F)
-@info "Calculated μ by newton and least squares" μ
+f(x, α) = α[2] * exp(-α[1]*x)
+F(α) = [(Ri - f(xi, α))^2 for (xi, Ri) in eachrow(df)] |> sum
+μ, C = newton(
+              F, 
+              Vec{2}([1.0, df[1, 2]])
+)
+@info "Calculated μ and C by newton and least squares" μ C
 
 xs = let
     mi = min(df[:, 1]...)
@@ -38,7 +42,7 @@ xs = let
     range = ma - mi
     mi:range/100:ma
 end
-p = plot(p, xs, f.(xs, [μ]), label="")
+p = plot(p, xs, f.(xs, [[μ, C]]), label="")
 
 @info "saving figure to output file" output_f
 savefig(p, output_f)
