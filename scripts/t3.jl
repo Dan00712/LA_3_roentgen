@@ -11,7 +11,7 @@ using Unitful
 Logging.global_logger(ConsoleLogger(Logging.Debug))
 id = datadir()
 ip = joinpath(datadir(), readdir(id)[end])
-op = joinpath(plotsdir(), "t3-1.svg")
+op = joinpath(plotsdir(), "t3.png")
 
 @debug "Loading DataFrame"
 df = ip |> CSV.File |> DataFrame

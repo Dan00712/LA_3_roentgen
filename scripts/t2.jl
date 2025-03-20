@@ -28,14 +28,14 @@ savefig(output_f)
 
 begin
     plot(df[:, 1], log.(df[:, 2]), xlabel=names(df)[1], ylabel=names(df)[2], legend=false)
-    annotate!(6.3, log(2000), "Kβ(1)")
-    annotate!(7.2, log(3700), "Kα(1)")
+    annotate!(6.3, 1.01*log(2000), "Kβ(1)")
+    annotate!(7.2, 1.01*log(3700), "Kα(1)")
 
-    annotate!(12.8, log(700), "Kβ(2)")
-    annotate!(14.5, log(1400), "Kα(2)")
+    annotate!(12.8, 1.05*log(700), "Kβ(2)")
+    annotate!(14.5, 1.05*log(1400), "Kα(2)")
 
-    annotate!(19.5, log(300), "Kβ(3)")
-    annotate!(22.1, log(500), "Kα(3)")
+    annotate!(19.5, 1.1*log(300), "Kβ(3)")
+    annotate!(22.1, 1.1*log(500), "Kα(3)")
 end
 fname, ext = let
     i = findlast(".", output_f)[1]
