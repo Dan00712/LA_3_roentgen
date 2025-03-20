@@ -4,8 +4,10 @@ name = "roentgen"
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 DrWatson = "634d3b9d-ee7a-5ddf-bec9-22491ea816e1"
+Plotly = "58dd65bb-95f3-509e-9936-c39a10fdeae7"
 TensorOperations = "6aa20fa7-93e2-5fca-9bc0-fbd0db3c71a2"
 Tensors = "48a634ad-e948-5137-8d70-aa71f2a747f4"
+Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [compat]
 DrWatson = "2.18.0"
