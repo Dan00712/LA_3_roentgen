@@ -7,11 +7,13 @@ using DataFrames
 using Plots
 using Tensors
 using Unitful
+using Measurements
 
 Logging.global_logger(ConsoleLogger(Logging.Debug))
 id = datadir()
 ip = joinpath(datadir(), readdir(id)[end])
 op = joinpath(plotsdir(), "t3.png")
+err= 7.5
 
 @debug "Loading DataFrame"
 df = ip |> CSV.File |> DataFrame
@@ -53,6 +55,7 @@ end
 nl0_35 = let
     df2 = df[:, [1, end]]
     df2 = df2[df2[:, 1] .> 16.5 .&& df2[:, 1] .< 19.75, :]
+
     a = approximate_series(df2)
     nl0 = -a[1]/a[2]
 
@@ -61,7 +64,7 @@ nl0_35 = let
     plot!(xs, f1.(xs), label=false)
 
     nl0
-end
+end ± err
 @debug "" nl0_35
 
 @debug "Calculate the zero of the 22kV Series"
@@ -76,9 +79,9 @@ nl0_22 = let
     plot!(xs, f1.(xs), label=false)
 
     nl0
-end
-@debug "" nl0_22
+end ± err
 
+@debug "" nl0_22 
 @debug "Save Plot"
 plot!(legend=:outertopright)
 savefig(op)
@@ -92,4 +95,5 @@ h = let
     Δ * e/c |> x-> uconvert(u"J*s", x)
 end
 println("h=$(h)")
+println("h=$(Measurements.value(h) + Measurements.uncertainty(h)),\t$(Measurements.value(h) - Measurements.uncertainty(h))")
 println("(h'-h)/h'=$((1u"h"-h)/1u"h" |> upreferred)")
