@@ -54,7 +54,7 @@ end
 @debug "Calculate the zero of the 35kV Series"
 nl0_35 = let
     df2 = df[:, [1, end]]
-    df2 = df2[df2[:, 1] .> 16.5 .&& df2[:, 1] .< 19.75, :]
+    df2 = df2[df2[:, 1] .> 65.0 .&& df2[:, 1] .< 76.0, :]
 
     a = approximate_series(df2)
     nl0 = -a[1]/a[2]
@@ -70,7 +70,7 @@ end ± err
 @debug "Calculate the zero of the 22kV Series"
 nl0_22 = let
     df2 = df[:, [1, 3]]
-    df2 = df2[df2[:, 1] .> 27.25, :]
+    df2 = df2[df2[:, 1] .> 111.0, :]
     a = approximate_series(df2)
     nl0 = -a[1]/a[2]
 
