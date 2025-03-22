@@ -14,7 +14,7 @@ df = DataFrame(CSV.File(input_f))
 df = df[.!isnan.(df[:, 2]), :]
 
 begin
-           plot(df[:, 1], df[:, 2], xlabel=names(df)[1], ylabel=names(df)[2], legend=false)
+           plot(df[:, 1], df[:, 2], xlabel="θ/deg", ylabel=names(df)[2], legend=false)
            annotate!(6.3, 2000, "Kβ(1)")
            annotate!(7.2, 3700, "Kα(1)")
 
@@ -27,7 +27,7 @@ end
 savefig(output_f)
 
 begin
-    plot(df[:, 1], log.(df[:, 2]), xlabel=names(df)[1], ylabel=names(df)[2], legend=false)
+    plot(df[:, 1], log.(df[:, 2]), xlabel="θ/deg", ylabel="log(R)", legend=false)
     annotate!(6.3, 1.01*log(2000), "Kβ(1)")
     annotate!(7.2, 1.01*log(3700), "Kα(1)")
 
