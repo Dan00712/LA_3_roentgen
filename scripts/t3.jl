@@ -13,10 +13,11 @@ Logging.global_logger(ConsoleLogger(Logging.Debug))
 id = datadir()
 ip = joinpath(datadir(), readdir(id)[end])
 op = joinpath(plotsdir(), "t3.png")
-err= 7.5
+err = .25
 
 @debug "Loading DataFrame"
 df = ip |> CSV.File |> DataFrame
+
 
 @debug "Plotting the meassured curves"
 plot(ylabel="R/Bq", xlabel="nλ/pm", legend=:outertopright)
@@ -54,7 +55,7 @@ end
 @debug "Calculate the zero of the 35kV Series"
 nl0_35 = let
     df2 = df[:, [1, end]]
-    df2 = df2[df2[:, 1] .> 65.0 .&& df2[:, 1] .< 76.0, :]
+    df2 = df2[df2[:, 1] .> 32.5 .&& df2[:, 1] .< 40, :]
 
     a = approximate_series(df2)
     nl0 = -a[1]/a[2]
@@ -70,7 +71,7 @@ end ± err
 @debug "Calculate the zero of the 22kV Series"
 nl0_22 = let
     df2 = df[:, [1, 3]]
-    df2 = df2[df2[:, 1] .> 111.0, :]
+    df2 = df2[df2[:, 1] .> 54.5 , :]
     a = approximate_series(df2)
     nl0 = -a[1]/a[2]
 
