@@ -5,6 +5,5 @@ exe="julia scripts/t1.jl"
 for f in data/t1-1.csv data/t1-2.csv
 do
     bn=$(basename $f)
-    y=${bn%.csv}
-    $exe $f plots/$y.png
+    $exe $f
 done
